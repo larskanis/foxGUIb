@@ -100,7 +100,7 @@ def hasExtension(filename, ext)
 end
 def loadImage(file)
 	img=load_dummy unless $dummy_img
-	unless File.exists? file 
+	unless File.exist? file
 		return img
 	end
 	begin
@@ -220,17 +220,17 @@ class Fox::FXIcon
 end
 class Fox::FXFontDesc
 	def to_s
-		[self.face, 
-		self.size, 
-		self.weight, 
-		self.slant, 
-		self.encoding, 
-		self.setwidth, 
+		[self.face,
+		self.size,
+		self.weight,
+		self.slant,
+		self.encoding,
+		self.setwidth,
 		self.flags].join( '|')
 	end
 	def from_s( s )
 			a=s.split('|')
-			self.face=a[0] 
+			self.face=a[0]
 			self.size=a[1].to_i
 			self.weight=a[2].to_i
 			self.slant=a[3].to_i
@@ -310,7 +310,7 @@ class RadioGroup
 		for w in @radio_widgets
 			begin
 				w.state=(w==@selected) # only the selected widget is checked.
-			rescue Exception 
+			rescue Exception
 				puts $!
 			end
 		end
@@ -385,8 +385,8 @@ class Button < Fox::FXButton
 		end
 	end
 	def state
-		if getState==Fox::STATE_DOWN then return true 
-		elsif getState==Fox::STATE_CHECKED then return true 
+		if getState==Fox::STATE_DOWN then return true
+		elsif getState==Fox::STATE_CHECKED then return true
 		end
 		return false
 	end
@@ -394,7 +394,7 @@ class Button < Fox::FXButton
 	alias :buttonButtonStyle :buttonStyle
 end
 class Canvas < Fox::FXCanvas
-	def initialize(p, opts=0); super p; 
+	def initialize(p, opts=0); super p;
 	end
 end
 class CheckButton < Fox::FXCheckButton
@@ -434,11 +434,11 @@ class ComboBox < Fox::FXComboBox
 		}
 		self.numColumns=size
 		self.numVisible=self.numItems
-	end	
+	end
 end
 class Dial < Fox::FXDial
 	def initialize(p, opts=0)
-		super(p, nil, 0, opts|Fox::DIAL_NORMAL)		
+		super(p, nil, 0, opts|Fox::DIAL_NORMAL)
 	end
 end
 class DialogBox < Fox::FXDialogBox
@@ -450,7 +450,7 @@ class DialogBox < Fox::FXDialogBox
 	include Responder
 	include MiddleBtn
 end
-class DirBox  < Fox::FXDirBox 
+class DirBox  < Fox::FXDirBox
 	def initialize(p, opts=0)
 		super p, nil, 0, opts|Fox::FRAME_SUNKEN|Fox::TREELISTBOX_NORMAL
 	end
@@ -498,8 +498,8 @@ class IconList  < Fox::FXIconList
 	alias :iconListStyle :listStyle
 	def addItems names, imagefiles
 		names.size.times do |i|
-			img = loadImage(imagefiles[i] )			
-			appendItem( names[i], nil, img)		
+			img = loadImage(imagefiles[i] )
+			appendItem( names[i], nil, img)
 		end
 	end
 end
@@ -544,7 +544,7 @@ class Matrix < Fox::FXMatrix
 		super @rows=dim_check( int)
 	end
 	def dim_check int
-		return 1 if int < 1 
+		return 1 if int < 1
 		return 1 unless int.kind_of?( Numeric)
 		return int
 	end
@@ -675,7 +675,7 @@ class Popup < Fox::FXPopup
 	end
 	include Responder
 	include MiddleBtn
-	include RadioMutexInterface	
+	include RadioMutexInterface
 end
 class ProgressBar < Fox::FXProgressBar
 	def initialize(p, opts=0)
@@ -713,7 +713,7 @@ class ScrollBar < Fox::FXScrollBar
 end
 class ScrollWindow < Fox::FXScrollWindow
 	def initialize(p, opts=0)
-		super p 
+		super p
 		self.layoutHints=Fox::LAYOUT_FILL_X|Fox::LAYOUT_FILL_Y
 	end
 end
@@ -863,7 +863,7 @@ class TreeList < Fox::FXTreeList
 	alias :treeListStyle :listStyle
 	def initialize_language_ids
 		self.each{|ti|
-			ti.initialize_language_ids			
+			ti.initialize_language_ids
 		}
 	end
 end
@@ -895,7 +895,7 @@ class WidgetTable < GroupBox
 	def add_col
 		@nc+=1
 		@r.each_with_index{|r, y|
-			VerticalFrame.new(r){|f| @c[[@nc-1,y]]=f 
+			VerticalFrame.new(r){|f| @c[[@nc-1,y]]=f
 				f.pad 0,0,0,0
 			}
 		}
@@ -906,15 +906,15 @@ class WidgetTable < GroupBox
 			h.pad 0,0,0,0
 			h.layoutHints=Fox::LAYOUT_FILL_X#|Fox::LAYOUT_FILL_Y
 			@r<<h
-			@nc.times{|x| 
-				VerticalFrame.new(h){|f| 
-					@c[[x,rows-1]]=f 
+			@nc.times{|x|
+				VerticalFrame.new(h){|f|
+					@c[[x,rows-1]]=f
 					f.pad 0,0,0,0
 				}
 			}
 		}
 	end
-	def cell(x, y); 
+	def cell(x, y);
 		@c[[x,y]]
 	end
 end
@@ -1037,7 +1037,7 @@ class FileSelector
 		@directory=Dir.getwd
 		@dialog = Fox::FXFileDialog.new(@topwin, @title)
 		@patterns = ["All Files (*)"]
-		@currentPattern=0		
+		@currentPattern=0
 		@browse.connect(Fox::SEL_COMMAND, method( :onBrowse))
 	end
 	attr_accessor :directory, :patterns, :currentPattern, :title, :filename, :relative_path
@@ -1201,7 +1201,7 @@ module RadioGroup1
 		if @selected_radio_widget
 			@selected_radio_widget.set_radio_state false
 		end
-		@selected_radio_widget=w 
+		@selected_radio_widget=w
 		@RadioGroup1_listeners.each{|l|
 			l.on_event( @selected_radio_widget)
 		}
@@ -1228,7 +1228,7 @@ module RadioWidget
 	def lmb_press(*args)
 		if @group and @group.respond_to?( "radio_command")
 			set_radio_state true
-			@group.radio_command(self) 
+			@group.radio_command(self)
 		else
 			set_radio_state( !@state)
 		end
@@ -1281,7 +1281,7 @@ module FX
 				@header.appendItem(" "+str)
 			}
 			set_cols stringarr.size
-			set_title_widths 
+			set_title_widths
 		end
 		def set_title_widths numarray=nil
 			if numarray
@@ -1385,7 +1385,7 @@ class DCWindow < Fox::FXDCWindow
 	def fillRectangle x, y, w, h
 		super( @xOrigin+x, @yOrigin+y, w, h)
 	end
-	def drawRectangle x, y, w, h 
+	def drawRectangle x, y, w, h
 		super( @xOrigin+x, @yOrigin+y, w, h)
 	end
 end
@@ -1420,7 +1420,7 @@ class PathSelector
 	end
 	def description
 		@label.text
-	end	
+	end
 	def onBrowse(*args)
 		@dialog.title=@title
 		@dialog.directory=@directory

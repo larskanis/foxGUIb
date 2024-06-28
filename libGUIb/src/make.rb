@@ -5,7 +5,7 @@
 STDOUT.sync=true
 
 $program_src_dir="./"
-$program_release_dir="../" 
+$program_release_dir="../"
 $program_file="__FX__.rb"
 $output_file="lib/libGUIb16.rb"
 $zip=false
@@ -15,8 +15,8 @@ $DEBUG=false
 $debugstring='"##{$program_working_dir}/#{filename}:#{i}:  "'
 
 $exclusion_names=[ # won't be inserted
-	/paths/, 
-	/fox(\/)?/, 
+	/paths/,
+	/fox(\/)?/,
 	/etc\.so/,
 	/properties/,
 	/code-gen/,
@@ -56,7 +56,7 @@ def check_exclusions filename
 	$exclusion_names.each{|regex|
 		if filename =~ regex
 			puts "#### excluded: #{filename}"
-			return true 
+			return true
 		end
 	}
 	return false
@@ -65,12 +65,12 @@ end
 $inside_unittest_block=false
 
 def check_exist filename
-	if File.exists?( filename)
+	if File.exist?( filename)
 		return filename
 	else
 		$require_paths.each{|path|
 			newname=File.join path, filename
-			return newname if File.exists? newname
+			return newname if File.exist? newname
 		}
 		raise "! File not found: "+filename
 	end
@@ -92,12 +92,12 @@ def fill_in f, require_string
 	return if $required_files.member? filename
 	puts "\tFILENAME: #{filename}"
 	$required_files << filename
-	f1=File.open( filename, "r")	
+	f1=File.open( filename, "r")
 	i=0
 	for line in f1.readlines
 		i+=1
-		if $inside_unittest_block and line.strip =~ /end/ 
-			$inside_unittest_block=false 
+		if $inside_unittest_block and line.strip =~ /end/
+			$inside_unittest_block=false
 			next
 		end
 		break if line =~ /#\s*MAKE_CUTOFF/
@@ -106,10 +106,10 @@ def fill_in f, require_string
 		next if line.strip.empty?
 		next if line.strip =~ /^#/
 		next if line.strip =~ /^;/
-		next if line.strip =~ /^dbg/			
-		next if line.strip =~ /^assert/			
+		next if line.strip =~ /^dbg/
+		next if line.strip =~ /^assert/
 		if line.strip =~ /^if __FILE__/
-			$inside_unittest_block=true 
+			$inside_unittest_block=true
 			next
 		end
 		next if line.strip =~ /\sif __FILE__/

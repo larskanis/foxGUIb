@@ -3,7 +3,7 @@
 # foxGUIb - main script
 # when started with ruby's commandline option -d output goes to $stdout otherwise to log.txt
 
-$:<<"src"<<"src/gui"<<"src/code-gen"
+$: << "src" << "src/gui" << "src/code-gen"
 require "version"
 
 begin
@@ -27,8 +27,8 @@ unless $DEBUG
   $stdout.sync=true
 end
 puts "\nstarting foxGUIb #{FOXGUIB_VERSION}. #{Time.now}"
-puts "\tRUBY VERSION #{VERSION}"
-puts "\tPLATFORM #{PLATFORM}"
+puts "\tRUBY VERSION #{RUBY_VERSION}"
+puts "\tPLATFORM #{RUBY_PLATFORM}"
 
 HOME=Dir.getwd
 
@@ -59,13 +59,13 @@ $console=Console.new( MAINWIN.topwin)
 $console.nolang
 $console.styled_out($console.s_op, "#{FOXGUIB} interactive ruby command console\nuse 'out(*args)' to output objects to the console.")
 $console.topwin.hide
-# --- 
+# ---
 $fxapp.create
 MAINWIN.topwin.resize(1000,600)
 MAINWIN.topwin.show(PLACEMENT_SCREEN)
 begin
 	load_settings("guib.conf")
-	
+
 	$fxapp.run
 	puts 'exited normally'
 rescue Exception

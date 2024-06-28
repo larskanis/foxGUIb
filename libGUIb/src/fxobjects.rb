@@ -35,7 +35,7 @@ end
 def loadImage(file)
 	img=load_dummy unless $dummy_img
 
-	unless File.exists? file 
+	unless File.exist? file
 		return img
 	end
 	begin
@@ -82,17 +82,17 @@ class Icon
 			end
 		end
 	attr_accessor :img
-	
+
 	def to_s
 		@filename
 	end
-	
+
 		def Icon.LoadFromString s, icon_class=Fox::FXPNGIcon
 			icon=Icon.new nil
 			icon.img=loadImageFromString s, icon_class
 			return icon
 		end
-		
+
 	end
 
 #color object (united fox functions)
@@ -175,26 +175,26 @@ end
 
 
 class Fox::FXFontDesc
-	#~ alias :_initialize_ :initialize 
+	#~ alias :_initialize_ :initialize
 	#~ def initialize
-		#~ _initialize_ 
+		#~ _initialize_
 		#~ from_s "Tahoma|80|400|1|0|0|0"
 	#~ end
 	#human readable string representation
 	def to_s
-		[self.face, 
-		self.size, 
-		self.weight, 
-		self.slant, 
-		self.encoding, 
-		self.setwidth, 
+		[self.face,
+		self.size,
+		self.weight,
+		self.slant,
+		self.encoding,
+		self.setwidth,
 		self.flags].join( '|')
 	end
 	#parse human readable string representation
 	def from_s( s )
 		#~ begin
 			a=s.split('|')
-			self.face=a[0] 
+			self.face=a[0]
 			self.size=a[1].to_i
 			self.weight=a[2].to_i
 			self.slant=a[3].to_i
