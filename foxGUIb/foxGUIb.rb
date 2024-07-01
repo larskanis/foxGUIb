@@ -21,16 +21,16 @@ rescue LoadError
   exit
 end
 
-STDOUT.sync=true
+STDOUT.sync = true
 unless $DEBUG
-  $stdout=File.new("log.txt", "a")
-  $stdout.sync=true
+  $stdout = File.new("log.txt", "a")
+  $stdout.sync = true
 end
 puts "\nstarting foxGUIb #{FOXGUIB_VERSION}. #{Time.now}"
 puts "\tRUBY VERSION #{RUBY_VERSION}"
 puts "\tPLATFORM #{RUBY_PLATFORM}"
 
-HOME=Dir.getwd
+HOME = Dir.getwd
 
 include FX
 include Fox
@@ -40,40 +40,41 @@ puts "\tFOX version: #{Fox.fxversion}\n\n"
 require "properties"
 require "widget-generator"
 require "mainwin"
-require 'docman'
-require 'propman'
-require 'widget-selector'
+require "docman"
+require "propman"
+require "widget-selector"
 require "ruby_console"
 require "cfgman"
 
-STD_BACK_COLOR=FXRGB(230,230,230)
-HEADER_COLOR=FXRGB(255,255,168)
+STD_BACK_COLOR = FXRGB(230, 230, 230)
+HEADER_COLOR = FXRGB(255, 255, 168)
 
 App.new FOXGUIB, ""
-MAINWIN=MainWin.new $app
-MAINWIN.topwin.shown=false
+
+MAINWIN = MainWin.new $app
+MAINWIN.topwin.shown = false
 DocMan.instance
-PropMan.instance.create( width=300)
+PropMan.instance.create(width = 300)
 WidgetSelector.instance
-$console=Console.new( MAINWIN.topwin)
+$console = Console.new(MAINWIN.topwin)
 $console.nolang
 $console.styled_out($console.s_op, "#{FOXGUIB} interactive ruby command console\nuse 'out(*args)' to output objects to the console.")
 $console.topwin.hide
 # ---
 $fxapp.create
-MAINWIN.topwin.resize(1000,600)
+MAINWIN.topwin.resize(1000, 600)
 MAINWIN.topwin.show(PLACEMENT_SCREEN)
 begin
-	load_settings("guib.conf")
+  load_settings("guib.conf")
 
-	$fxapp.run
-	puts 'exited normally'
+  $fxapp.run
+  puts "exited normally"
 rescue Exception
-	puts '#'*15
-	puts $!
-	puts $!.backtrace.join("\n")
-	puts '#'*15
-	DocMan.instance.emergency_save
+  puts "#" * 15
+  puts $!
+  puts $!.backtrace.join("\n")
+  puts "#" * 15
+  DocMan.instance.emergency_save
 ensure
-	save_settings("guib.conf")
+  save_settings("guib.conf")
 end

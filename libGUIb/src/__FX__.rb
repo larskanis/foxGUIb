@@ -1,6 +1,6 @@
 # Copyright (c) 2004-2006 by Henon (meinrad dot recheis at gmail dot com)
 
-require 'fox16'
+require "fox16"
 
 require	"relative-path"
 require	"app"
