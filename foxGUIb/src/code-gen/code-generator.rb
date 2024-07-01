@@ -59,14 +59,15 @@ module CodeGenerator
     name ||= make_class_name treeitem
     if lang == "ruby"
       i("class #{name}")
-      i("def initialize( parent)")
-      w "construct_widget_tree( parent)"
-      w "init if respond_to? 'init'"
+      i("def initialize(parent)")
+      w "construct_widget_tree(parent)"
+      w "init if respond_to? :init"
       o("end")
       w ""
-      i("def construct_widget_tree( parent)")
-      w "@topwin="
+      i("def construct_widget_tree(parent)")
+      i "@topwin = "
       gen_widget_tree lang, treeitem
+      o "@topwin"
       o "end"
       w "attr_reader :topwin"
       gen_accessors lang, treeitem
@@ -82,9 +83,9 @@ module CodeGenerator
     wdg = @w[treeitem.to_s]
     raise "widget #{treeitem} is nil! cannot generate code." unless wdg
     if lang == "ruby"
-      i("#{wdg.class}.new(#{parent_name}){|w_#{treeitem}|")
-      w "@#{treeitem}=w_#{treeitem}"
-      w "w_#{treeitem}.wdg_name='#{treeitem}'"
+      i("#{wdg.class}.new(#{parent_name}) { |w_#{treeitem}|")
+      w "@#{treeitem} = w_#{treeitem}"
+      w "w_#{treeitem}.wdg_name = \"#{treeitem}\""
       wdg.generate_properties { |p| w p.to(lang, treeitem) }
       generate_behaviour wdg, lang, treeitem
       treeitem.each { |child|
@@ -98,11 +99,11 @@ module CodeGenerator
     return unless wdg.behaviour
     wdg.behaviour.each { |event, code|
       next if code.strip.empty?
-      i("@#{treeitem}.connect(Fox::#{event}){")
+      i("@#{treeitem}.connect(Fox::#{event}) { ")
       code.split($/).each { |line|
         w line
       }
-      o("}")
+      o(" }")
     }
   end
 
@@ -117,16 +118,16 @@ module CodeGenerator
 
   def gen_unittest lang, treeitem, name
     if lang == "ruby"
-      w "#unit test"
-      i("if __FILE__==$0")
-      w "require '#{FOXGUIB_LIBRARY}'"
-      w "app=FX::App.new"
+      w "# unit test"
+      i("if __FILE__ == $0")
+      w "require \"#{FOXGUIB_LIBRARY}\""
+      w "app = FX::App.new"
       if @w[treeitem.to_s] == @topwin
-        w "w=#{name}.new app"
+        w "w = #{name}.new app"
         w "w.topwin.show(Fox::PLACEMENT_SCREEN)"
       else
-        w "mw=MainWindow.new app"
-        w "w=#{name}.new mw"
+        w "mw = MainWindow.new app"
+        w "w = #{name}.new mw"
         w "mw.show(Fox::PLACEMENT_SCREEN)"
       end
       w "app.create"

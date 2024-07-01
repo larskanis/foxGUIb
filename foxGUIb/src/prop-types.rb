@@ -77,6 +77,10 @@ class SuperProp < HorizontalFrame
     }
   end
 
+  def method_s
+    method.gsub(/=$/, " = ")
+  end
+
   # a text manipulator for textual properties
   def text_input
     @tf = TextField.new(self) { |tf|

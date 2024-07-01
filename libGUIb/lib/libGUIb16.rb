@@ -203,7 +203,7 @@ module FX
     end
 
     def to_s
-      (@a ? [@r, @g, @b, @a] : [@r, @g, @b]).join(",")
+      (@a ? [@r, @g, @b, @a] : [@r, @g, @b]).join(", ")
     end
 
     def from_s s

@@ -3,7 +3,7 @@
 module StringPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}#{serialize @wdg.send(method.chop).inspect}"
+      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop).inspect}"
     end
   end
 end
@@ -11,7 +11,7 @@ end
 module IntPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}#{serialize @wdg.send(method.chop)}"
+      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop)}"
     end
   end
 end
@@ -19,7 +19,7 @@ end
 module BoolPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}#{serialize @wdg.send(method.chop)}"
+      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop)}"
     end
   end
 end
@@ -27,7 +27,7 @@ end
 module ConstPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}#{serialize @wdg.send(method.chop)}"
+      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop)}"
     end
   end
 end
@@ -35,7 +35,7 @@ end
 module ColorPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}Fox::FXRGBA(#{serialize @wdg.send(method.chop)})"
+      "w_#{treeitem}.#{method_s}Fox::FXRGBA(#{serialize @wdg.send(method.chop)})"
     end
   end
 end
@@ -43,7 +43,7 @@ end
 module FontPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}FX::Font.new.from_s('#{serialize(@wdg.send(method.chop))}').to_FXFont"
+      "w_#{treeitem}.#{method_s}FX::Font.new.from_s(\"#{serialize(@wdg.send(method.chop))}\").to_FXFont"
     end
   end
 end
@@ -51,7 +51,7 @@ end
 module IconPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}'#{serialize @wdg.send(method.chop)}'"
+      "w_#{treeitem}.#{method_s}\"#{serialize @wdg.send(method.chop)}\""
     end
   end
 end
@@ -59,7 +59,7 @@ end
 module RangePropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method}#{serialize @wdg.send(method.chop)}"
+      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop)}"
     end
   end
 end
