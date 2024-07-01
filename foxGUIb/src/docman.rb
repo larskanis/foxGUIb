@@ -99,8 +99,8 @@ class DocMan
     switch
   end
 
-  def load
-    filename = SuperFileDialog.new(@parent, "", "load foxGUIb document").start
+  def load(filename=nil)
+    filename ||= SuperFileDialog.new(@parent, "", "load foxGUIb document").start
     if filename
       # ~ @current.dlg.hide if @current
       # @current.topwin.hide if @current

@@ -67,6 +67,11 @@ MAINWIN.topwin.show(PLACEMENT_SCREEN)
 begin
   load_settings("guib.conf")
 
+  # Load files given on command line
+  ARGV.each do |arg|
+    DocMan.instance.load(arg)
+  end
+
   $fxapp.run
   puts "exited normally"
 rescue Exception
