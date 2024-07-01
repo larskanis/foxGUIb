@@ -33,7 +33,7 @@ class Loader
     f.read
   end
 
-  def open(filename, &) # {|f| ... }
+  def open(filename, &block) # {|f| ... }
     assert block
     path = File.join(@home, filename)
     unless File.exist? path
@@ -41,7 +41,7 @@ class Loader
       return
     end
     begin
-      File.open(path, "rb", &)
+      File.open(path, "rb", &block)
     rescue Exception
       fail(filename, $!)
     end
