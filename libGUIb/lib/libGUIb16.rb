@@ -5,8 +5,8 @@ $VERBOSE=nil #<--- this is to overcome a bug in ruby 1.8.x that yields a whole l
 require  'fox16'
 def rel_path(a, b)
 	raise TypeError unless (a.kind_of? String and b.kind_of? String)
-	a.gsub!(/\\/,'/')
-	b.gsub!(/\\/,'/')
+	a.gsub!("\\", "/")
+	b.gsub!("\\", "/")
 	a = a.split('/')
 	b = b.split('/')
 	i = 0
@@ -265,28 +265,28 @@ class Fox::FXIcon
 	end
 end
 class Module
-    def __sends__ *args
-        args.each { |arg|
-            class_eval <<-CEEND
-                def on_#{arg}(&callback)
-                    @#{arg}_observers ||= {}
-                    @#{arg}_observers[caller[0]]=callback
-		    return caller[0]
-                end
-		def del_#{arg}(id)
-			@#{arg}_observers ||= {}
-			return @#{arg}_observers.delete( id)
+	def __sends__ *args
+		args.each do |arg|
+			class_eval <<-CEEND
+				def on_#{arg}(&callback)
+					@#{arg}_observers ||= {}
+					@#{arg}_observers[caller[0]]=callback
+					return caller[0]
+				end
+				def del_#{arg}(id)
+					@#{arg}_observers ||= {}
+					return @#{arg}_observers.delete( id)
+				end
+				private
+				def #{arg} *the_args
+					@#{arg}_observers ||= {}
+					@#{arg}_observers.each do |caller, cb|
+						cb.call *the_args
+					end
+				end
+			CEEND
 		end
-                private
-                def #{arg} *the_args
-                    @#{arg}_observers ||= {}
-                    @#{arg}_observers.each { |caller, cb|
-                        cb.call *the_args
-                    }
-                end
-            CEEND
-        }
-    end
+	end
 end
 module FX
 class RadioGroup
@@ -297,7 +297,7 @@ class RadioGroup
 	end
 	attr_reader :radio_widgets
 	def add_radio(radio_widget, &block)
-		@radio_widgets<<radio_widget
+		@radio_widgets << radio_widget
 		radio_widget.connect(Fox::SEL_COMMAND){
 			select( radio_widget)
 			yield if block_given?
@@ -905,7 +905,7 @@ class WidgetTable < GroupBox
 			h.frameStyle=FRAME_NONE
 			h.pad 0,0,0,0
 			h.layoutHints=Fox::LAYOUT_FILL_X#|Fox::LAYOUT_FILL_Y
-			@r<<h
+			@r << h
 			@nc.times{|x|
 				VerticalFrame.new(h){|f|
 					@c[[x,rows-1]]=f
