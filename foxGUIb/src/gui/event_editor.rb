@@ -118,13 +118,11 @@ class EventEditor < GuibEventEditor
     else
       @Text.text = "No event is selected!"
       @Text.disable
-      @CheckButton.app.addChore do
-        @CheckButton.setFocus
-      end
+      @CheckButton.setFocus
     end
-    @Text.app.addChore do
-      @Text.setFocus
-    end
+    # Disable setFocus for now as it aborts on X-Windows with
+    # "FXComposeContext: illegal window parameter"
+    # @Text.setFocus
   end
 
   def set_widget w
