@@ -42,7 +42,9 @@ class Console < BaseConsole
     @HorizontalFrame5.hide
     configure_textbuffer @HistoryText
     configure_textbuffer @CmdsText
-    @cmdln.setFocus
+    @topwin.app.addChore do
+      @cmdln.setFocus
+    end
     @scrolling = true
   end
   attr_reader :s_error, :s_op, :s_cmd
