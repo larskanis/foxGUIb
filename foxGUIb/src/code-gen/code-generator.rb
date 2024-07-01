@@ -23,25 +23,25 @@ module CodeGenerator
 
   def i(text = "")
     @indent ||= 0
-    @ws ||= "\t"
+    @ws ||= "  "
     # @wr=$stdout if @wr.nil?
-    @wr += ((@ws * @indent) + text) + $/
+    @wr += ((@ws * @indent) + text).rstrip + $/
     @indent += 1
   end
 
   def w(text = "")
     @indent ||= 0
-    @ws ||= "\t"
+    @ws ||= "  "
     # @wr=$stdout if @wr.nil?
-    @wr += ((@ws * @indent) + text) + $/
+    @wr += ((@ws * @indent) + text).rstrip + $/
   end
 
   def o(text = "")
     @indent ||= 0
     @indent -= 1
-    @ws ||= "\t"
+    @ws ||= "  "
     # @wr=$stdout if @wr.nil?
-    @wr += ((@ws * @indent) + text) + $/
+    @wr += ((@ws * @indent) + text).rstrip + $/
   end
 
   def gen_app lang
