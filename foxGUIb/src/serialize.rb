@@ -4,6 +4,27 @@ require "minitest"
 require "pp"
 require "yaml"
 
+class PP < PrettyPrint
+  module PPMethods
+    def pp_hash(obj)
+      group(1, "{", "}") {
+        seplist(obj.to_a.sort { |a, b| a[0].to_s <=> b[0].to_s }, nil, :each) { |kv|
+          k, v = *kv
+          group {
+            pp k
+            text "=>"
+            group(1) {
+              breakable ""
+              pp v
+            }
+          }
+        }
+        obj
+      }
+    end
+  end
+end
+
 class Loader
   def initialize dir = "."
     @home = dir
