@@ -1,8 +1,9 @@
 # libGUIb: Copyright (c) by Meinrad Recheis aka Henon, 2006
 # THIS SOFTWARE IS PROVIDED IN THE HOPE THAT IT WILL BE USEFUL
 # WITHOUT ANY IMPLIED WARRANTY OR FITNESS FOR ANY PURPOSE.
-$VERBOSE = nil # <--- this is to overcome a bug in ruby 1.8.x that yields a whole lot of warnings when loading fxruby
+
 require "fox16"
+
 def rel_path(a, b)
   raise TypeError unless a.is_a? String and b.is_a? String
   a.tr!("\\", "/")
