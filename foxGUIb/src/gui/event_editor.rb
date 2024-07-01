@@ -118,9 +118,13 @@ class EventEditor < GuibEventEditor
     else
       @Text.text = "No event is selected!"
       @Text.disable
-      @CheckButton.setFocus
+      @CheckButton.app.addChore do
+        @CheckButton.setFocus
+      end
     end
-    @Text.setFocus
+    @Text.app.addChore do
+      @Text.setFocus
+    end
   end
 
   def set_widget w
