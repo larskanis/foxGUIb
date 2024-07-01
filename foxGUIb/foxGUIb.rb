@@ -3,7 +3,10 @@
 # foxGUIb - main script
 # when started with ruby's commandline option -d output goes to $stdout otherwise to log.txt
 
-$: << "src" << "src/gui" << "src/code-gen"
+$: << File.expand_path("src", __dir__)
+$: << File.expand_path("src/gui", __dir__)
+$: << File.expand_path("src/code-gen", __dir__)
+
 require "version"
 
 begin
