@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "libguib"
-  spec.version = "1.1.0"
+  spec.version = "1.1.1"
   spec.authors = ["Meinrad Recheis aka Henon", "Lars Kanis"]
   spec.email = ["meinrad.recheis@gmail.com", "lars@greiz-reinsdorf.de"]
 
