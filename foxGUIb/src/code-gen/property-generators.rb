@@ -3,7 +3,20 @@
 module StringPropCodeGen
   def to lang, treeitem
     if lang == "ruby"
-      "w_#{treeitem}.#{method_s}#{serialize @wdg.send(method.chop).inspect}"
+      val = @wdg.send(method.chop)
+      if val.start_with?("[")
+        # begin
+          args = JSON.parse(val)
+          if args.last.is_a?(Hash)
+            val = "I18n.t(*#{args[0..-2].inspect}, **#{args.last.transform_keys(&:to_sym).inspect})"
+          else
+            val = "I18n.t(*#{args.inspect})"
+          end
+          return "w_#{treeitem}.#{method_s}#{val}"
+        # rescue JSON::JSONError
+        # end
+      end
+      "w_#{treeitem}.#{method_s}#{serialize val.inspect}"
     end
   end
 end
