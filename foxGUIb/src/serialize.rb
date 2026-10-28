@@ -1,6 +1,5 @@
 # Copyright (c) 2004-2006 by Henon (meinrad dot recheis at gmail dot com)
 
-require "minitest"
 require "pp"
 require "yaml"
 
